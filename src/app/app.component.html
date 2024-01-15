@@ -1,0 +1,130 @@
+<section id="section-container">
+  <div class="form-container">
+    <h1>Configuration</h1>
+    <form [formGroup]="connectionForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Host</mat-label>
+        <input matInput formControlName="hostname" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Port</mat-label>
+        <input matInput formControlName="port" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Mountpoint</mat-label>
+        <input matInput formControlName="path" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Client ID</mat-label>
+        <input matInput formControlName="clientId" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" />
+      </mat-form-field>
+    </form>
+    <button mat-raised-button color="primary" (click)="createConnection()" *ngIf="!isConnection">
+      Connect
+    </button>
+    <button mat-raised-button color="warn" (click)="destroyConnection()" *ngIf="isConnection">
+      Disconnect
+    </button>
+  </div>
+
+  <div class="form-container">
+    <div>
+      <h1>Subscribe</h1>
+      <form [formGroup]="subscribeForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Topic</mat-label>
+          <input matInput formControlName="topic" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>QoS</mat-label>
+          <mat-select formControlName="qos">
+            @for (qos of qosListSubscribe; track qos.value) {
+            <mat-option [value]="qos.value">
+              {{qos.label}}
+            </mat-option>
+            } @empty {
+            Empty list of receive
+            }
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <button mat-raised-button color="primary" (click)="doSubscribe()">Subscribe</button>
+      <button mat-raised-button color="warn" class="unsubscribe-btn" (click)="doUnSubscribe()"
+        *ngIf="subscribeSuccess">Unsubscribe</button>
+    </div>
+
+    <div>
+      <h1>Second Subscribe</h1>
+      <form [formGroup]="secondSubscribeForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Topic</mat-label>
+          <input matInput formControlName="topic" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>QoS</mat-label>
+          <mat-select formControlName="qos">
+            @for (qos of qosListSubscribe; track qos.value) {
+            <mat-option [value]="qos.value">
+              {{qos.label}}
+            </mat-option>
+            } @empty {
+            Empty list of receive
+            }
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <button mat-raised-button color="primary" (click)="doSecondSubscribe()">Subscribe</button>
+      <button mat-raised-button color="warn" class="unsubscribe-btn" (click)="doSecondUnSubscribe()"
+        *ngIf="secondSubscribeSuccess">Unsubscribe</button>
+    </div>
+
+    <div>
+      <h1>Publish</h1>
+      <form [formGroup]="publishForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Topic</mat-label>
+          <input matInput formControlName="topic" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>QoS</mat-label>
+          <mat-select formControlName="qos">
+            @for (qos of qosListPublish; track qos.value) {
+            <mat-option [value]="qos.value">
+              {{qos.label}}
+            </mat-option>
+            } @empty {
+            Empty list of receive
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Payload</mat-label>
+          <input matInput formControlName="payload" />
+        </mat-form-field>
+      </form>
+      <button mat-raised-button color="primary" *ngIf="isConnection" (click)="doPublish()">{{ 'Publish' }}</button>
+    </div>
+  </div>
+  
+  <div class="form-container-receive">
+    <h1>Receive ({{ receiveNews.length }})</h1>
+    <div class="receive-container">
+      @for (receive of receiveNews; track receive.msg) {
+      <mat-card class="card-container">
+        <div class="topic-container">Topic: {{ receive.topic }} <span>Id: {{ receive.msg.Id }}</span></div>
+        <div class="topic-container">Message: {{ receive.msg.Text }} <span>Alert: {{ receive.msg.Alert }}</span></div>
+      </mat-card>
+      } @empty {
+      Empty list of receive
+      }
+    </div>
+  </div>
+</section>

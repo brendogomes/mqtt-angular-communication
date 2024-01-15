@@ -1,0 +1,51 @@
+:host {
+    #section-container {
+        display: flex;
+        height: 97vh;
+
+        .form-container {
+            border-radius: 6px;
+            padding: 10px;
+            margin: 10px;
+            width: 100%;
+        }
+
+        .form-container-receive {
+            border-radius: 6px;
+            padding: 10px;
+            margin: 10px;
+            width: 100%;
+            overflow-y: scroll;
+        }
+
+        .btn-configuration {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .unsubscribe-btn {
+            margin-left: 8px;
+        }
+
+        .receive-container {
+            display: flex;
+            flex-direction: column;
+
+            .topic-container {
+                margin-bottom: 4px;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+        .card-container {
+            padding: 8px;
+            margin-bottom: 6px;
+            background-color: rgb(0 255 149);
+        }
+
+        mat-form-field {
+            width: 100%;
+        }
+    }
+}
